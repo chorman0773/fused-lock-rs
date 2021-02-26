@@ -95,6 +95,8 @@ impl<T: ?Sized> FusedRwLock<T> {
         }
     }
 
+    ///
+    /// Locks the RwLock for reading, and returns a shared reference to the interior of the lock
     pub fn read(&self) -> &T {
         if !self.is_locked() {
             self.lock();
@@ -102,6 +104,9 @@ impl<T: ?Sized> FusedRwLock<T> {
         self.try_read().unwrap()
     }
 
+    ///
+    /// Acquires an exclusive lock to the interior of the lock, if this lock has not already been locked for reading.
+    /// Otherwise, returns None
     pub fn try_write(&self) -> Option<FusedRwLockGuard<T>> {
         // Optimization, since a true return from self.is_locked is guaranteed to continue forever
         if !self.is_locked() {
