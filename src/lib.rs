@@ -109,7 +109,7 @@ impl<T: ?Sized> FusedRwLock<T> {
             let guard = self.inner.write();
             if !self.is_locked() {
                 Some(FusedRwLockGuard {
-                    guard,
+                    _guard: guard,
                     inner: unsafe { &mut *self.object.get() },
                 })
             } else {
@@ -122,7 +122,7 @@ impl<T: ?Sized> FusedRwLock<T> {
 }
 
 pub struct FusedRwLockGuard<'a, T: ?Sized> {
-    guard: parking_lot::RwLockWriteGuard<'a, ()>,
+    _guard: parking_lot::RwLockWriteGuard<'a, ()>,
     inner: &'a mut T,
 }
 

@@ -3,6 +3,11 @@ name = "fused-lock"
 version = "0.1.0"
 authors = ["Connor <chorman64@gmail.com>"]
 edition = "2018"
+description = """
+ Fused RwLock, that, once locked for reading, can not be used to obtain further exclusive access.
+"""
+license = "MIT AND Apache-2.0"
+repository = "https://github.com/chorman0773/fused-lock-rs"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
