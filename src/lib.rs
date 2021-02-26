@@ -89,7 +89,6 @@ impl<T: ?Sized> FusedRwLock<T> {
         if self.locked.load(Ordering::Acquire) {
             // Safety:
             // Because self.locked is set, the lock can never be borrowed exclusively again
-            //
             Some(unsafe { &*self.object.get() })
         } else {
             None
@@ -110,6 +109,8 @@ impl<T: ?Sized> FusedRwLock<T> {
             if !self.is_locked() {
                 Some(FusedRwLockGuard {
                     _guard: guard,
+                    // Safety:
+                    // Because self.locked is not set, there are no readers. Other writers are excluded by the fact that the WriteGuard is held.
                     inner: unsafe { &mut *self.object.get() },
                 })
             } else {
