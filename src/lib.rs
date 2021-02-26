@@ -122,9 +122,11 @@ impl<T: ?Sized> FusedRwLock<T> {
     }
 }
 
+///
+/// An RAII guard that holds exclusive mutable access to the inner object.
 pub struct FusedRwLockGuard<'a, T: ?Sized> {
-    _guard: parking_lot::RwLockWriteGuard<'a, ()>,
     inner: &'a mut T,
+    _guard: parking_lot::RwLockWriteGuard<'a, ()>,
 }
 
 impl<'a, T: ?Sized> Deref for FusedRwLockGuard<'a, T> {
